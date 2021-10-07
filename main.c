@@ -29,6 +29,8 @@ typedef enum _sort_order_t {	/* Tady vĹŻbec nemusĂ­ bĂ˝t hodnotu u vĂ˝Ä
     DESCENDING = 1	/** SestupnĂ© poĹ™adĂ­. */
 } sort_order_t;
 
+void swap(int *pInt, int *pInt1);
+
 /**
  * @brief Funkce provede vĂ˝pis zadanĂ©ho pole s danĂ˝m popiskem. VĂ˝pis prvkĹŻ pole se Ĺ™Ă­dĂ­ stylem PRINT_STYLE.
  * @param label Popisek pole.
@@ -81,9 +83,21 @@ void generate_array(int array[], const unsigned int array_size) {
  * @param order PĹ™Ă­znak, kterĂ˝ urÄŤuje zda je poĹ™adĂ­ sestupnĂ© nebo vzestupnĂ©.
  */
 void bubble_sort(int array[], const unsigned int array_size, sort_order_t order) {
-
+    int i, j;
+    for (i = 0; i < array_size-1; i++)// Last i elements are already in place
+        for (j = 0; j < array_size-i-1; j++)
+            if (array[j] > array[j+1])
+                swap(&array[j], &array[j+1]);
 }
 
+
+
+void swap(int *xp, int *yp)
+{
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
 /**
  * @brief HlavnĂ­ pĹ™Ă­stpovĂ˝ bod aplikace, kterĂ˝ vygeneruje ARR_LEN celĂ˝ch kladnĂ˝ch ÄŤĂ­sel. Tato ÄŤĂ­sla budou
  *        nĂˇslednÄ› seĹ™azena algoritmem bublinkovĂ©ho Ĺ™azenĂ­.
@@ -97,7 +111,7 @@ int main() {
     print_array("Vygenerovane prvky", array, ARR_LEN);
 
     /* SeĹ™adĂ­m jej pomocĂ­ algoritmu bubble sort. */
-    /* bubble_sort(array, ARR_LEN, DESCENDING); */
+    bubble_sort(array, ARR_LEN, DESCENDING);
     print_array("Serazene prvky", array, ARR_LEN);
 
     return EXIT_SUCCESS;
